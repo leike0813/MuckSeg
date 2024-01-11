@@ -1,0 +1,44 @@
+TRAIN_STAGE1:
+  LR_SCHEDULER:
+    FREQUENCY: 1
+    INTERVAL: epoch
+    MONITOR: valid/epoch/IoU
+    MONITOR_MODE: max
+    NAME: ReduceLROnPlateauWithWarmup
+    REDUCEONPLATEAU:
+      cooldown: 0
+      eps: 1.0e-08
+      min_lr: 5.0e-06
+      patience: 2
+      reduce_factor: 0.2
+      threshold: 0.0001
+      threshold_mode: rel
+    VERBOSE: false
+    WARMUP:
+      END_FACTOR: 1.0
+      START_FACTOR: 0.3333333333333333
+      WARMUP_EPOCHS: 5
+  MONITOR: valid/epoch/IoU
+  MONITOR_MODE: max
+TRAIN_STAGE2:
+  LR_SCHEDULER:
+    FREQUENCY: 1
+    INTERVAL: epoch
+    MONITOR: valid/epoch/IoU_Boundary
+    MONITOR_MODE: max
+    NAME: ReduceLROnPlateauWithWarmup
+    REDUCEONPLATEAU:
+      cooldown: 0
+      eps: 1.0e-08
+      min_lr: 5.0e-06
+      patience: 2
+      reduce_factor: 0.2
+      threshold: 0.0001
+      threshold_mode: rel
+    VERBOSE: false
+    WARMUP:
+      END_FACTOR: 1.0
+      START_FACTOR: 0.3333333333333333
+      WARMUP_EPOCHS: 5
+  MONITOR: valid/epoch/IoU_Boundary
+  MONITOR_MODE: max

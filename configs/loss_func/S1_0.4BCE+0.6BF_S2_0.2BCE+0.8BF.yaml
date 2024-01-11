@@ -1,0 +1,72 @@
+TRAIN_STAGE1:
+  LOSS_FUNC:
+    BCELOSS:
+      pos_weight:
+        - 0.8
+      reduction: mean
+    BINARYFOCALLOSS:
+      alpha: 0.4
+      gamma: 2.0
+      reduction: mean
+    COMPOSE:
+      LIST:
+        - BCELoss
+        - BinaryFocalLoss
+      WEIGHT:
+        - 0.4
+        - 0.6
+    FUNC_NAME: Compose
+    NAME: Raw_Region
+    OUTPUT_TYPE: logit
+    SIDE_OUTPUT_WEIGHTS:
+      - 0.7
+      - 0.3
+    WEIGHT: 1.0
+TRAIN_STAGE2:
+  LOSS_FUNC:
+    BOUNDARY:
+      BCELOSS:
+        pos_weight:
+          - 1.6
+        reduction: mean
+      BINARYFOCALLOSS:
+        alpha: 0.6
+        gamma: 1.0
+        reduction: mean
+      COMPOSE:
+        LIST:
+          - BCELoss
+          - BinaryFocalLoss
+        WEIGHT:
+          - 0.2
+          - 0.8
+      FUNC_NAME: Compose
+      NAME: Boundary
+      OUTPUT_TYPE: logit
+      SIDE_OUTPUT_WEIGHTS:
+        - 0.7
+        - 0.3
+      WEIGHT: 0.6
+    REGION:
+      BCELOSS:
+        pos_weight:
+          - 0.8
+        reduction: mean
+      BINARYFOCALLOSS:
+        alpha: 0.4
+        gamma: 1.0
+        reduction: mean
+      COMPOSE:
+        LIST:
+          - BCELoss
+          - BinaryFocalLoss
+        WEIGHT:
+          - 0.2
+          - 0.8
+      FUNC_NAME: Compose
+      NAME: Region
+      OUTPUT_TYPE: logit
+      SIDE_OUTPUT_WEIGHTS:
+        - 0.7
+        - 0.3
+      WEIGHT: 0.4
