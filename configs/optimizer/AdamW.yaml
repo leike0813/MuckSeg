@@ -1,0 +1,16 @@
+TRAIN_STAGE1:
+  OPTIMIZER:
+    ADAMW:
+      betas: &id001
+      - 0.9
+      - 0.999
+      eps: 1.0e-08
+    NAME: AdamW
+    WEIGHT_DECAY: 0.01
+TRAIN_STAGE2:
+  OPTIMIZER:
+    ADAMW:
+      betas: *id001
+      eps: 1.0e-08
+    NAME: AdamW
+    WEIGHT_DECAY: 0.01

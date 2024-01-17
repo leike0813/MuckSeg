@@ -1,0 +1,102 @@
+BASE:
+- './environment._local.yaml'
+- './loss_func/S1_0.4BCE+0.6BF_S2_0.2BCE+0.8BF.yaml'
+- './scheduler/ReduceLROnPlateauWithWarmup.yaml'
+- './optimizer/AdamW.yaml'
+CONFIG_OUTPUT_PATH: configs
+DATA:
+  DATAMODULE:
+    test_volume: 1000
+    val_volume: 100
+  DATA_PATH: ''
+MODEL:
+  DECODER_STAGE1:
+    depths:
+    - 2
+    - 2
+    kernel_sizes:
+    - 7
+    - 7
+  DECODER_STAGE2:
+    boundary_depths:
+    - 2
+    - 2
+    boundary_kernel_sizes:
+    - 7
+    - 7
+    rea_kernel_size: 7
+    region_depths:
+    - 2
+    - 2
+    region_kernel_sizes:
+    - 7
+    - 7
+  DIM: 32
+  DROP_PATH_RATE: 0.2
+  ENCODER:
+    depths:
+    - 3
+    - 9
+    - 3
+    - 3
+    kernel_sizes:
+    - 7
+    - 7
+    - 7
+    - 7
+    multi_scale_input: false
+    stem_routes:
+    - 3CONV
+    - 5CONV
+    - 7CONV
+    - 9CONV
+    - D-3CONV
+    - D-5CONV
+  NECK:
+    depth: 3
+    kernel_size: 7
+  IMAGE_SIZE: 512
+  IN_CHANS: 1
+  MLP_RATIO: 4.0
+  OUT_CHANS: 1
+  SPEC_NAME: 'Base'
+  USE_CONVNEXT_V2: true
+PREDICT:
+  DATA_PATH: ''
+TRAIN_STAGE1:
+  TAG: Stage1
+  EXPERIMENT_NAME: MuckSeg
+  BATCH_SIZE: 5
+  USE_BATCHSIZE_FINDER: false
+  OPTIMIZER:
+    BASE_LR: 0.0002
+  TRAINER:
+    accelerator: gpu
+    max_epochs: 120
+    min_epochs: 10
+    overfit_batches: 0
+    precision: 16-mixed
+    strategy: auto
+  USE_CUSTOM_CHECKPOINTING: True
+  USE_EARLYSTOPPING: false
+  CHECKPOINT_SAVELAST: True
+  CHECKPOINT_TOPK: 1
+TRAIN_STAGE2:
+  TAG: Stage2
+  EXPERIMENT_NAME: MuckSeg
+  BATCH_SIZE: 6
+  USE_BATCHSIZE_FINDER: false
+  OPTIMIZER:
+    BASE_LR: 0.0001
+  TRAINER:
+    accelerator: gpu
+    max_epochs: 80
+    min_epochs: 10
+    overfit_batches: 0
+    precision: 16-mixed
+    strategy: auto
+  USE_CUSTOM_CHECKPOINTING: True
+  USE_EARLYSTOPPING: True
+  EARLYSTOPPING_PATIENCE: 10
+  CHECKPOINT_SAVELAST: True
+  CHECKPOINT_TOPK: 1

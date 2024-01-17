@@ -1,0 +1,28 @@
+TRAIN_STAGE2:
+  EXPERIMENT_NAME: MuckSeg
+  TAG: Finetune
+  OPTIMIZER:
+    BASE_LR: 0.00002
+  LR_SCHEDULER:
+    CYCLICLR:
+      base_lr: 0.00002
+      cycle_momentum: false
+      max_lr: 0.00005
+      mode: exp_range
+      gamma: 0.9999
+      step_size_down: 1000
+      step_size_up: 1000
+    FREQUENCY: 1
+    NAME: CyclicLR
+  TRAINER:
+    accelerator: gpu
+    max_epochs: 10
+    min_epochs: 5
+    overfit_batches: 0
+    precision: 16-mixed
+    strategy: auto
+  USE_CUSTOM_CHECKPOINTING: True
+  USE_EARLYSTOPPING: True
+  EARLYSTOPPING_PATIENCE: 5
+  CHECKPOINT_SAVELAST: True
+  CHECKPOINT_TOPK: 1
