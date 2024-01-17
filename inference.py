@@ -60,6 +60,8 @@ def parse_option():
         elif args.cfg is not None:
             args.inference_result_path = (
                         (Path(args.inference_data_path) / 'predictions') / Path(args.cfg).stem).as_posix()
+    else:
+        args.inference_result_path = os.path.join(args.inference_data_path, args.inference_result_path)
 
     if args.run_folder_path is not None:
         import yaml
